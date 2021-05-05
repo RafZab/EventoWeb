@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Evento.Core.Domain
 {
-    class Event : Entity
+    public class Event : Entity
     {
         private ISet<Ticket> _tickets = new HashSet<Ticket>();
         public string Name { get; protected set; }

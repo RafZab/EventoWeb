@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Evento.Core.Domain
 {
-    class User : Entity
+    public class User : Entity
     {
         public string Role { get; protected set; }
         public string Name { get; protected set; }

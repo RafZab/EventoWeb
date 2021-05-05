@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Evento.Core.Domain
 {
-    class Ticket : Entity
+    public class Ticket : Entity
     {
         public Guid EventId { get; protected set; }
         public int Seating { get; protected set; }
