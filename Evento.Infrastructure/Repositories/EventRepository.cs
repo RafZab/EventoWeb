@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Evento.Infrastructure.Repositories
 {
-    class EventRepository : IEventRepository
+    public class EventRepository : IEventRepository
     {
         public static readonly ISet<Event> _events = new HashSet<Event>();
         public async Task<Event> GetAsync(Guid id)
