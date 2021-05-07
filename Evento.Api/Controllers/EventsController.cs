@@ -31,6 +31,7 @@ namespace Evento.Api.Controllers
         {
             commad.EventId = Guid.NewGuid();
             await _eventService.CreateAsync(commad.EventId, commad.Name, commad.Description, commad.StartDate, commad.EndDate);
+            await _eventService.AddTicketAsync(commad.EventId, commad.Tickets, commad.Price);
 
             return Created($"/events/{commad.EventId}", null);
         }
