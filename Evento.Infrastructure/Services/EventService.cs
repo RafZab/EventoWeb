@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Evento.Core.Domain;
 using Evento.Core.Repositories;
 using Evento.Infrastructure.DTO;
 using System;
@@ -46,7 +47,12 @@ namespace Evento.Infrastructure.Services
 
         public async Task CreateAsync(Guid id, string name, string desscription, DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var @event = await _eventRepository.GetAsync(name);
+            if (@event != null)
+                throw new Exception($"Event named: '{name}' already exists");
+
+            @event = new Event(id, name, desscription, startDate, endDate);
+            await _eventRepository.AddAsync(@event);
         }
 
         public async Task UpdateAsync(Guid id, string name, string description)
