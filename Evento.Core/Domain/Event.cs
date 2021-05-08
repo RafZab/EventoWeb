@@ -23,11 +23,26 @@ namespace Evento.Core.Domain
             DateTime startDate, DateTime endDate)
         {
             Id = id;
-            Name = name;
-            Description = description;
+            SetName(name);
+            SetDescription(description);
             StartDate = startDate;
             EndDate = endDate;
             CreatedAt = DateTime.UtcNow;
+            UpdateAt = DateTime.UtcNow;
+        }
+
+        public void SetName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new Exception($"Event with id: {Id} can not have empty name.");
+            Name = name;
+            UpdateAt = DateTime.UtcNow;
+        }
+        public void SetDescription(string description)
+        {
+            if (string.IsNullOrEmpty(description))
+                throw new Exception($"Event with id: {Id} can not have empty description.");
+            Description = description;
             UpdateAt = DateTime.UtcNow;
         }
 

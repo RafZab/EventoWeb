@@ -35,5 +35,15 @@ namespace Evento.Api.Controllers
 
             return Created($"/events/{commad.EventId}", null);
         }
+        
+        [HttpPut("eventId")]
+        public async Task<IActionResult> Post([FromRoute]Guid eventId, [FromBody] UpdateEvent commad)
+        {
+            commad.EventId = eventId;
+            await _eventService.UpdateAsync(commad.EventId, commad.Name, commad.Description);
+
+            return NoContent();
+        }
+
     }
 }
