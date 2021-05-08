@@ -2,6 +2,7 @@
 using Evento.Core.Domain;
 using Evento.Core.Repositories;
 using Evento.Infrastructure.DTO;
+using Evento.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,9 +43,7 @@ namespace Evento.Infrastructure.Services
 
         public async Task AddTicketAsync(Guid id, int amount, decimal price)
         {
-            var @event = await _eventRepository.GetAsync(id);
-            if (@event == null)
-                throw new Exception($"Event with id: '{id}' doesn't exists");
+            var @event = await _eventRepository.GetOrFailAsync(id);
 
             @event.AddTickets(amount, price);
             await _eventRepository.UpdateAsync(@event);
@@ -52,9 +51,7 @@ namespace Evento.Infrastructure.Services
 
         public async Task CreateAsync(Guid id, string name, string desscription, DateTime startDate, DateTime endDate)
         {
-            var @event = await _eventRepository.GetAsync(name);
-            if (@event != null)
-                throw new Exception($"Event named: '{name}' already exists");
+            var @event = await _eventRepository.GetOrFailAsync(name);
 
             @event = new Event(id, name, desscription, startDate, endDate);
             await _eventRepository.AddAsync(@event);
@@ -62,13 +59,9 @@ namespace Evento.Infrastructure.Services
 
         public async Task UpdateAsync(Guid id, string name, string description)
         {
-            var @event = await _eventRepository.GetAsync(id);
-            if (@event == null)
-                throw new Exception($"Event with id: '{id}' doesn't exists");
+            var @event = await _eventRepository.GetOrFailAsync(name);
 
-            @event = await _eventRepository.GetAsync(name);
-            if (@event != null)
-                throw new Exception($"Event named: '{name}' already exists");
+            @event = await _eventRepository.GetOrFailAsync(id);
 
             @event.SetName(name);
             @event.SetDescription(description);
