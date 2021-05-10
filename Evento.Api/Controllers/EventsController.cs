@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Evento.Api.Controllers
 {
-    [Route("[controller]")]
+    [Route("events")]
     public class EventsController : Controller
     {
         private readonly IEventService _eventService;
@@ -19,7 +19,7 @@ namespace Evento.Api.Controllers
         }
 
         [HttpGet("{eventId}")]
-        public async Task<IActionResult> Get(Guid eventId)
+        public async Task<IActionResult> Get([FromRoute]Guid eventId)
         {
             var @event = await _eventService.GetAsync(eventId);
             if (@event == null)
@@ -45,7 +45,7 @@ namespace Evento.Api.Controllers
             return Created($"/events/{commad.EventId}", null);
         }
         
-        [HttpPut("eventId")]
+        [HttpPut("{eventId}")]
         public async Task<IActionResult> Post([FromRoute]Guid eventId, [FromBody] UpdateEvent commad)
         {
             commad.EventId = eventId;
@@ -54,8 +54,8 @@ namespace Evento.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("eventId")]
-        public async Task<IActionResult> Delete(Guid eventId)
+        [HttpDelete("{eventId}")]
+        public async Task<IActionResult> Delete([FromRoute]Guid eventId)
         {
             await _eventService.DeleteAsync(eventId);
 
