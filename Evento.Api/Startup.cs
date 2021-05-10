@@ -36,6 +36,7 @@ namespace Evento.Api
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IUserService, UserService>();
 
             // dodanie mapper do servisu.
             services.AddSingleton(AutoMapperConfing.Initialize());
@@ -54,7 +55,7 @@ namespace Evento.Api
 
             app.UseRouting();
 
-         //   app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
