@@ -18,11 +18,20 @@ namespace Evento.Api.Controllers
             _eventService = eventService;
         }
 
+        [HttpGet("{eventId}")]
+        public async Task<IActionResult> Get(Guid eventId)
+        {
+            var @event = await _eventService.GetAsync(eventId);
+            if (@event == null)
+                return NotFound();
+            return Json(@event);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(string name)
         {
             var events = await _eventService.BrowseAsync(name);
-            
+
             return Json(events);
         }
 
@@ -46,7 +55,7 @@ namespace Evento.Api.Controllers
         }
 
         [HttpDelete("eventId")]
-        public async Task<IActionResult> Delete([FromRoute] Guid eventId)
+        public async Task<IActionResult> Delete(Guid eventId)
         {
             await _eventService.DeleteAsync(eventId);
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Evento.Core.Domain
@@ -14,6 +15,9 @@ namespace Evento.Core.Domain
         public DateTime EndDate { get; protected set; }
         public DateTime UpdateAt { get; protected set; }
         public IEnumerable<Ticket> Tickets => _tickets;
+        public IEnumerable<Ticket> PurshasedTickets => Tickets.Where(x => x.Pruchased);
+        public IEnumerable<Ticket> AvailableTickets => Tickets.Except(PurshasedTickets);
+
 
         protected Event()
         {
