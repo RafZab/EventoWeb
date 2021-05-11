@@ -55,6 +55,8 @@ namespace Evento.Api
                 };
             });
 
+            services.AddAuthorization();
+
             services.AddControllers();
 
             services.AddScoped<IEventRepository, EventRepository>();

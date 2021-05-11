@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Evento.Api.Controllers
 {
     [Route("events")]
-    public class EventsController : Controller
+    public class EventsController : ApiControllerBase
     {
         private readonly IEventService _eventService;
 

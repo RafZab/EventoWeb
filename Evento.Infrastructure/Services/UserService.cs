@@ -1,6 +1,8 @@
-﻿using Evento.Core.Domain;
+﻿using AutoMapper;
+using Evento.Core.Domain;
 using Evento.Core.Repositories;
 using Evento.Infrastructure.DTO;
+using Evento.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,11 +14,21 @@ namespace Evento.Infrastructure.Services
     {
         public readonly IUserRepository _userRepository;
         public readonly IJwtHandler _jwtHandler;
+        public readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IJwtHandler jwtHandler)
+
+        public UserService(IUserRepository userRepository, IJwtHandler jwtHandler, IMapper mapper)
         {
             _userRepository = userRepository;
             _jwtHandler = jwtHandler;
+            _mapper = mapper;
+        }
+
+        public async Task<AccountDto> GetAccountAsync(Guid userId)
+        {
+            var user = await _userRepository.GetOrFailAsync(userId);
+
+            return _mapper.Map<AccountDto>(user);
         }
 
         public async Task RegisterAsync(Guid userId, string emial, string name, string password, string role = "user")
