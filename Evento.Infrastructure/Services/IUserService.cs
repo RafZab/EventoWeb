@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Evento.Infrastructure.DTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,6 @@ namespace Evento.Infrastructure.Services
     {
         Task RegisterAsync(Guid userId, string emial,
             string name, string password, string role = "user");
-        Task LoginAsync(string emial, string password);
+        Task<TokenDto> LoginAsync(string emial, string password);
     }
 }

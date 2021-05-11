@@ -55,8 +55,6 @@ namespace Evento.Api
                 };
             });
 
-
-
             services.AddControllers();
 
             services.AddScoped<IEventRepository, EventRepository>();
@@ -66,6 +64,8 @@ namespace Evento.Api
 
             // dodanie mapper do servisu.
             services.AddSingleton(AutoMapperConfing.Initialize());
+            services.AddSingleton<IJwtHandler, JwtHandler>();
+
 
         }
 
