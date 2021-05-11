@@ -19,7 +19,6 @@ namespace Evento.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Get()
             => Json(await _userService.GetAccountAsync(UserId));
 

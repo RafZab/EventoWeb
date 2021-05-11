@@ -78,6 +78,8 @@ namespace Evento.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            // do Bearer 
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

@@ -43,7 +43,7 @@ namespace Evento.Infrastructure.Services
         public async Task<TokenDto> LoginAsync(string emial, string password)
         {
             var user = await _userRepository.GetAsync(emial);
-            if (user != null)
+            if (user == null)
                 throw new Exception($"Invalid credentials");
 
             if(user.Password != password)

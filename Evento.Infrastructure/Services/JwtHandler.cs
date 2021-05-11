@@ -37,6 +37,7 @@ namespace Evento.Infrastructure.Services
            
             var jwt = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Issuer,
                 claims: claims,
                 notBefore: now,
                 expires: expires,
