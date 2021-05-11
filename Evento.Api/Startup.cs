@@ -55,7 +55,10 @@ namespace Evento.Api
                 };
             });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("HasAdminRole", bulider => bulider.RequireRole("admin"));
+            });
 
             services.AddControllers();
 
