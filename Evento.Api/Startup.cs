@@ -15,7 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Evento.Infrastructure.Settings;
 
 namespace Evento.Api
 {
@@ -31,6 +33,30 @@ namespace Evento.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var jwtSettings = new JwtSettings();
+
+            Configuration.GetSection("Jwt").Bind(jwtSettings);
+
+            services.AddSingleton(jwtSettings);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Bearer";
+                options.DefaultScheme = "Bearer";
+                options.DefaultChallengeScheme = "Bearer";
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Issuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+                };
+            });
+
+
+
             services.AddControllers();
 
             services.AddScoped<IEventRepository, EventRepository>();
@@ -56,7 +82,7 @@ namespace Evento.Api
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
