@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Evento.Infrastructure.Services
 {
-    class TicketService : ITicketService
+    public class TicketService : ITicketService
     {
         private readonly IUserRepository _userRepository;
         private readonly IEventRepository _eventRepository;
