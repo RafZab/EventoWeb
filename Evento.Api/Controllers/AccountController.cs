@@ -29,7 +29,7 @@ namespace Evento.Api.Controllers
         [Authorize]
         public async Task<IActionResult> GetTickets()
         {
-            var tickets = _ticketService.GetForUserAsync(UserId);
+            var tickets = await _ticketService.GetForUserAsync(UserId);
             return Json(tickets);
         }
 
